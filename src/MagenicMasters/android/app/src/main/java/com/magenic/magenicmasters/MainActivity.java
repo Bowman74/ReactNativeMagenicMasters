@@ -1,4 +1,4 @@
-package com.magenicmasters;
+package com.magenic.magenicmasters;
 
 import com.facebook.react.ReactActivity;
 
