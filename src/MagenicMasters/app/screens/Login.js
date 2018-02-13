@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 
 export default class Login extends Component {
+    static navigationOptions = {
+        title: "Login"
+    };
+
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.mainView}>
                 <View style={styles.topSpacer} />
@@ -14,7 +19,7 @@ export default class Login extends Component {
                 <Button
                     title="Login"
                     onPress={() => {
-                        Alert.alert("Login", "We are logged in");
+                        navigate("LandingPage");
                     }}
                 />
             </View>
