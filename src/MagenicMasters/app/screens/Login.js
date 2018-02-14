@@ -19,7 +19,7 @@ export default class Login extends Component {
                 <Button
                     title="Login"
                     onPress={() => {
-                        navigate("LandingPage");
+                        navigate("LandingPage", { loginName: "Kevin" });
                     }}
                 />
             </View>
