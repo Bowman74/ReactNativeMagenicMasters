@@ -7,14 +7,14 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import Login from "./app/screens/Login";
-import LandingPage from "./app/screens/LandingPage";
+import TabNavigator from "./app/screens/TabNavigator";
 import Tos from "./app/screens/Tos";
 
 import { StackNavigator } from "react-navigation";
 
 const NavigationRoutes = {
     Login: { screen: Login },
-    LandingPage: { screen: LandingPage }
+    TabNavigator: { screen: TabNavigator }
 };
 
 export const RootStack = StackNavigator(NavigationRoutes);

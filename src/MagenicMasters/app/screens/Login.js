@@ -9,7 +9,7 @@ export default class Login extends Component {
     };
 
     render() {
-        const { push } = this.props.navigation;
+        const { dispatch } = this.props.navigation;
         return (
             <View style={styles.mainView}>
                 <View style={styles.topSpacer} />
@@ -25,12 +25,12 @@ export default class Login extends Component {
                             index: 0,
                             actions: [
                                 NavigationActions.navigate({
-                                    routeName: "LandingPage",
+                                    routeName: "TabNavigator",
                                     params: { loginName: "Kevin" }
                                 })
                             ]
                         });
-                        this.props.navigation.dispatch(resetAction);
+                        dispatch(resetAction);
                     }}
                 />
             </View>

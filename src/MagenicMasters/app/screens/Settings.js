@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 
-export default class LandingPage extends Component {
+export default class Settings extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: "Landing",
+        title: "Settings",
         headerTintColor: "#FFFFFF",
         headerStyle: styles.headerStyle,
         headerRight: (
@@ -20,7 +20,7 @@ export default class LandingPage extends Component {
     render() {
         return (
             <View style={styles.mainView}>
-                <Text>Landing Page</Text>
+                <Text>Settings Page</Text>
             </View>
         );
     }
