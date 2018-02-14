@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 
 export default class LandingPage extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: "Landing",
+        title: "Landing for " + navigation.state.params.loginName,
         headerTintColor: "#FFFFFF",
         headerStyle: styles.headerStyle,
         headerRight: (
