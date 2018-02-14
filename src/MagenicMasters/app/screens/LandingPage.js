@@ -9,7 +9,7 @@ export default class LandingPage extends Component {
         headerRight: (
             <TouchableOpacity
                 onPress={() => {
-                    Alert.alert("Terms", "show terms");
+                    navigation.navigate("Tos");
                 }}
             >
                 <Text style={styles.headerButtonStyle}>Terms</Text>
