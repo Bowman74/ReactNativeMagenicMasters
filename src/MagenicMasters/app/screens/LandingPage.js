@@ -1,9 +1,20 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 
 export default class LandingPage extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: "Landing"
+        title: "Landing",
+        headerTintColor: "#FFFFFF",
+        headerStyle: styles.headerStyle,
+        headerRight: (
+            <TouchableOpacity
+                onPress={() => {
+                    Alert.alert("Terms", "show terms");
+                }}
+            >
+                <Text style={styles.headerButtonStyle}>Terms</Text>
+            </TouchableOpacity>
+        )
     });
 
     render() {
@@ -18,5 +29,12 @@ export default class LandingPage extends Component {
 const styles = StyleSheet.create({
     mainView: {
         flex: 1
+    },
+    headerStyle: {
+        backgroundColor: "#2196F3"
+    },
+    headerButtonStyle: {
+        color: "#FFFFFF",
+        padding: 20
     }
 });
