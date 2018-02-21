@@ -1,13 +1,17 @@
 import React from "react";
 import { TabNavigator, TabBarBottom } from "react-navigation";
-import { Image, Alert } from "react-native";
+import { Image, Alert, StyleSheet, TouchableOpacity, Text } from "react-native";
 import LandingPage from "./LandingPage";
 import Settings from "./Settings";
 
 const MainTab = TabNavigator(
     {
-        LandingPage: { screen: LandingPage },
-        Settings: { screen: Settings }
+        LandingPage: {
+            screen: LandingPage
+        },
+        Settings: {
+            screen: Settings
+        }
     },
     {
         navigationOptions: ({ navigation }) => ({
@@ -61,7 +65,32 @@ export default class TabNavigation extends React.Component {
         );
     }
 
+    static navigationOptions = ({ navigation, screenProps }) => ({
+        title: "Magenic Masters",
+        headerTintColor: "#FFFFFF",
+        headerStyle: styles.headerStyle,
+        headerRight: (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("Tos");
+                }}
+            >
+                <Text style={styles.headerButtonStyle}>Terms</Text>
+            </TouchableOpacity>
+        )
+    });
+
     render() {
         return <MainTab />;
     }
 }
+
+const styles = StyleSheet.create({
+    headerStyle: {
+        backgroundColor: "#2196F3"
+    },
+    headerButtonStyle: {
+        color: "#FFFFFF",
+        padding: 20
+    }
+});
