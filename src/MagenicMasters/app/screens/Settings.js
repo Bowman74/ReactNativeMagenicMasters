@@ -85,6 +85,14 @@ export default class Settings extends Component {
                         }
                     />
                 </View>
+                <View style={{ flex: 1 }} />
+                {this.state.settings.workOffline && (
+                    <View style={{ alignItems: "center", padding: 20 }}>
+                        <Text style={{ color: "#FF0000" }}>
+                            Working Offline
+                        </Text>
+                    </View>
+                )}
             </View>
         );
     }
