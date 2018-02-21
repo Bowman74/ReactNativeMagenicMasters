@@ -1,10 +1,10 @@
 import React from "react";
 import { TabNavigator, TabBarBottom } from "react-navigation";
-import { Image } from "react-native";
+import { Image, Alert } from "react-native";
 import LandingPage from "./LandingPage";
 import Settings from "./Settings";
 
-export default TabNavigator(
+const MainTab = TabNavigator(
     {
         LandingPage: { screen: LandingPage },
         Settings: { screen: Settings }
@@ -51,3 +51,17 @@ export default TabNavigator(
         swipeEnabled: false
     }
 );
+
+export default class TabNavigation extends React.Component {
+    constructor(props) {
+        super(props);
+        Alert.alert(
+            "Params",
+            JSON.stringify(this.props.navigation.state.params)
+        );
+    }
+
+    render() {
+        return <MainTab />;
+    }
+}
