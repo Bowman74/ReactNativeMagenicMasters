@@ -6,7 +6,11 @@ import {
     TouchableOpacity,
     Alert,
     TextInput,
-    Switch
+    Switch,
+    DatePickerIOS,
+    TouchableNativeFeedback,
+    DatePickerAndroid,
+    Platform
 } from "react-native";
 
 export default class Settings extends Component {
@@ -28,48 +32,59 @@ export default class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            settings: { createDate: "", workOffline: false },
+            settings: { createDate: new Date(), workOffline: false },
             dateErrorColor: "#FF0000"
         };
     }
+
+    dateChanged = newDate => {
+        this.setState({
+            settings: {
+                ...this.state.settings,
+                createDate: newDate
+            }
+        });
+    };
+
+    setDate = async () => {
+        try {
+            const dateChanged = this.dateChanged;
+            const { action, year, month, day } = await DatePickerAndroid.open({
+                // Use `new Date()` for current date.
+                // May 25 2020. Month 0 is January.
+                date: this.state.settings.createDate
+            });
+            if (action !== DatePickerAndroid.dismissedAction) {
+                dateChanged(new Date(year, month, day));
+            }
+        } catch ({ code, message }) {
+            console.warn("Cannot open date picker", message);
+        }
+    };
 
     render() {
         return (
             <View style={styles.mainView}>
                 <View style={styles.rowStyle}>
-                    <Text style={{ flex: 1 }}>Create Date:</Text>
-                    <TextInput
-                        style={{
-                            width: 75,
-                            color: this.state.dateErrorColor
-                        }}
-                        value={this.state.settings.createDate}
-                        onChangeText={newDate =>
-                            this.setState(
-                                {
-                                    settings: {
-                                        ...this.state.settings,
-                                        createDate: newDate
-                                    }
-                                },
-                                function() {
-                                    if (this.state.settings.createDate)
-                                        var dateValue = Date.parse(
-                                            this.state.settings.createDate
-                                        );
-                                    if (isNaN(dateValue) == true) {
-                                        this.setState({
-                                            dateErrorColor: "#FF0000"
-                                        });
-                                    } else {
-                                        this.setState({
-                                            dateErrorColor: "#000000"
-                                        });
-                                    }
-                                }
-                            )
-                        }
-                    />
+                    <Text>Create Date:</Text>
+                    {Platform.OS === "ios" && (
+                        <DatePickerIOS
+                            style={{ flex: 1 }}
+                            date={this.state.settings.createDate}
+                            mode="date"
+                            onDateChange={this.dateChanged}
+                        />
+                    )}
+                    {Platform.OS === "android" && (
+                        <TouchableNativeFeedback
+                            style={{ flex: 1 }}
+                            onPress={() => this.setDate()}
+                        >
+                            <Text style={{ flex: 1, textAlign: "right" }}>
+                                {this.state.settings.createDate.toDateString()}
+                            </Text>
+                        </TouchableNativeFeedback>
+                    )}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={{ flex: 1 }}>Work Offline:</Text>
