@@ -13,6 +13,8 @@ import {
     Platform
 } from "react-native";
 
+import DateControl from "./DateControl";
+
 export default class Settings extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
         title: "Settings",
@@ -37,31 +39,6 @@ export default class Settings extends Component {
         };
     }
 
-    dateChanged = newDate => {
-        this.setState({
-            settings: {
-                ...this.state.settings,
-                createDate: newDate
-            }
-        });
-    };
-
-    setDate = async () => {
-        try {
-            const dateChanged = this.dateChanged;
-            const { action, year, month, day } = await DatePickerAndroid.open({
-                // Use `new Date()` for current date.
-                // May 25 2020. Month 0 is January.
-                date: this.state.settings.createDate
-            });
-            if (action !== DatePickerAndroid.dismissedAction) {
-                dateChanged(new Date(year, month, day));
-            }
-        } catch ({ code, message }) {
-            console.warn("Cannot open date picker", message);
-        }
-    };
-
     render() {
         return (
             <View style={styles.mainView}>
@@ -71,26 +48,18 @@ export default class Settings extends Component {
                         {this.props.screenProps.userName}
                     </Text>
                 </View>
-                <View style={styles.rowStyle}>
+                <View style={styles.dateRowStyle}>
                     <Text>Create Date:</Text>
-                    {Platform.OS === "ios" && (
-                        <DatePickerIOS
-                            style={{ flex: 1 }}
-                            date={this.state.settings.createDate}
-                            mode="date"
-                            onDateChange={this.dateChanged}
-                        />
-                    )}
-                    {Platform.OS === "android" && (
-                        <TouchableNativeFeedback
-                            style={{ flex: 1 }}
-                            onPress={() => this.setDate()}
-                        >
-                            <Text style={{ flex: 1, textAlign: "right" }}>
-                                {this.state.settings.createDate.toDateString()}
-                            </Text>
-                        </TouchableNativeFeedback>
-                    )}
+                    <DateControl
+                        style={{ flex: 1 }}
+                        settings={this.state.settings}
+                    />
+                </View>
+                <View style={styles.rowStyle}>
+                    <Text>Current Date:</Text>
+                    <Text style={{ flex: 1, textAlign: "right" }}>
+                        {this.state.settings.createDate.toDateString()}
+                    </Text>
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={{ flex: 1 }}>Work Offline:</Text>
@@ -127,6 +96,11 @@ const styles = StyleSheet.create({
     rowStyle: {
         flexDirection: "row",
         padding: 10
+    },
+    dateRowStyle: {
+        flexDirection: "row",
+        padding: 10,
+        height: 200
     },
     headerStyle: {
         backgroundColor: "#2196F3"
