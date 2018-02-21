@@ -59,10 +59,6 @@ const MainTab = TabNavigator(
 export default class TabNavigation extends React.Component {
     constructor(props) {
         super(props);
-        Alert.alert(
-            "Params",
-            JSON.stringify(this.props.navigation.state.params)
-        );
     }
 
     static navigationOptions = ({ navigation, screenProps }) => ({
@@ -81,7 +77,7 @@ export default class TabNavigation extends React.Component {
     });
 
     render() {
-        return <MainTab />;
+        return <MainTab screenProps={this.props.navigation.state.params} />;
     }
 }
 

@@ -29,13 +29,7 @@ export default class Login extends Component {
             actions: [
                 NavigationActions.navigate({
                     routeName: "TabNavigator",
-                    params: { foo: this.state.userName },
-                    action: NavigationActions.setParams({
-                        params: {
-                            userName: this.state.userName
-                        },
-                        key: "Settings"
-                    })
+                    params: { userName: this.state.userName }
                 })
             ]
         });
