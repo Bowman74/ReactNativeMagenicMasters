@@ -39,6 +39,12 @@ export default class Settings extends Component {
         };
     }
 
+    updateSettings(newSettings) {
+        this.setState({
+            settings: newSettings
+        });
+    }
+
     render() {
         return (
             <View style={styles.mainView}>
@@ -53,6 +59,7 @@ export default class Settings extends Component {
                     <DateControl
                         style={{ flex: 1 }}
                         settings={this.state.settings}
+                        updateParentSettings={this.updateSettings.bind(this)}
                     />
                 </View>
                 <View style={styles.rowStyle}>

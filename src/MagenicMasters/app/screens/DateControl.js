@@ -16,25 +16,19 @@ import {
 export default class DateControl extends Component {
     constructor(props) {
         super(props);
-        this.state = { settings: this.props.settings };
     }
 
     dateChanged = newDate => {
-        this.setState({
-            settings: {
-                ...this.state.settings,
-                createDate: newDate
-            }
-        });
+        var newSettings = this.props.settings;
+        newSettings.createDate = newDate;
+        this.props.updateParentSettings(newSettings);
     };
 
     setDate = async () => {
         try {
             const dateChanged = this.dateChanged;
             const { action, year, month, day } = await DatePickerAndroid.open({
-                // Use `new Date()` for current date.
-                // May 25 2020. Month 0 is January.
-                date: this.state.settings.createDate
+                date: this.props.settings.createDate
             });
             if (action !== DatePickerAndroid.dismissedAction) {
                 dateChanged(new Date(year, month, day));
