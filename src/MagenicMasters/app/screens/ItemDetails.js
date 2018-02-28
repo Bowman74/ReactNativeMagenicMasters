@@ -11,7 +11,9 @@ import {
     TouchableNativeFeedback,
     DatePickerAndroid,
     Platform,
-    ScrollView
+    ScrollView,
+    Animated,
+    Easing
 } from "react-native";
 
 export default class ItemDetails extends Component {
@@ -23,13 +25,36 @@ export default class ItemDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            fadeOut: new Animated.Value(1),
+            leftPostion: new Animated.Value(1000)
+        };
+    }
+
+    componentDidMount() {
+        Animated.sequence(
+            [
+                Animated.timing(this.state.leftPostion, {
+                    toValue: 0,
+                    duration: 1000,
+                    easing: Easing.out(Easing.back())
+                }).start()
+            ],
+            [
+                Animated.timing(this.state.fadeOut, {
+                    toValue: 0,
+                    duration: 3000
+                }).start()
+            ]
+        );
     }
 
     render() {
         const { params } = this.props.navigation.state;
+        const { fadeOut } = this.state;
+        const { leftPostion } = this.state;
         return (
-            <ScrollView horizontal style={styles.mainView}>
+            <ScrollView style={styles.mainView}>
                 <View
                     style={{
                         flex: 1,
@@ -64,9 +89,15 @@ export default class ItemDetails extends Component {
                     </Text>
                     <Text>{params.detailItem.fname}</Text>
                 </View>
-                <Text style={{ fontSize: 96 }}>
+                <Animated.Text
+                    style={{
+                        fontSize: 96,
+                        opacity: fadeOut,
+                        left: leftPostion
+                    }}
+                >
                     {JSON.stringify(params.detailItem)}
-                </Text>
+                </Animated.Text>
                 <Text style={{ fontSize: 96 }}>
                     Big text to cause scrolling
                 </Text>
