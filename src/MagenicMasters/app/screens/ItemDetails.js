@@ -3,17 +3,19 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     Alert,
     TextInput,
     Switch,
     DatePickerIOS,
-    TouchableNativeFeedback,
     DatePickerAndroid,
     Platform,
     ScrollView,
     Animated,
-    Easing
+    Easing,
+    TouchableHighlight,
+    TouchableNativeFeedback,
+    TouchableOpacity,
+    TouchableWithoutFeedback
 } from "react-native";
 
 export default class ItemDetails extends Component {
@@ -101,6 +103,25 @@ export default class ItemDetails extends Component {
                 <Text style={{ fontSize: 96 }}>
                     Big text to cause scrolling
                 </Text>
+                <TouchableHighlight onPress={() => {}}>
+                    <Text>TouchableHighlight</Text>
+                </TouchableHighlight>
+                <TouchableNativeFeedback
+                    background={TouchableNativeFeedback.SelectableBackground()}
+                    onPress={() => {}}
+                >
+                    <View style={{ backgroundColor: "red" }}>
+                        <Text>TouchableNativeFeedback</Text>
+                    </View>
+                </TouchableNativeFeedback>
+                <TouchableOpacity onPress={() => {}}>
+                    <Text>TouchableOpacity</Text>
+                </TouchableOpacity>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                    <View>
+                        <Text>TouchableWithoutFeedback</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </ScrollView>
         );
     }
