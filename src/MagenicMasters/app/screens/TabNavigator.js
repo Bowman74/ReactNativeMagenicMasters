@@ -77,7 +77,7 @@ export default class TabNavigation extends React.Component {
     });
 
     render() {
-        return <MainTab screenProps={this.props.navigation.state.params} />;
+        return <MainTab screenProps={this.props.navigation} />;
     }
 }
 

@@ -107,6 +107,7 @@ export default class LandingPage extends Component {
     };
 
     render() {
+        const navigation = this.props.screenProps;
         return (
             <View style={styles.mainView}>
                 <SectionList
@@ -184,7 +185,13 @@ export default class LandingPage extends Component {
                         </Text>
                     )}
                     renderItem={({ item }) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate("ItemDetails", {
+                                    detailItem: item
+                                });
+                            }}
+                        >
                             <View
                                 style={{
                                     flex: 1,
