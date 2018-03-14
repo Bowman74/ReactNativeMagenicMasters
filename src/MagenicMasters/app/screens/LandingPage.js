@@ -100,7 +100,7 @@ export default class LandingPage extends Component {
                                 </View>
                                 <View style={styles.listRowColumn}>
                                     <Text style={styles.listRowLabel}>
-                                        Locaiton:
+                                        Location:
                                     </Text>
                                     <Text style={styles.listRowContent}>
                                         {item.location.name}

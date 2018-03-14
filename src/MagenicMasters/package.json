@@ -10,6 +10,7 @@
     "linq": "^3.0.9",
     "react": "16.2.0",
     "react-native": "0.53.0",
+    "react-native-sqlite-storage": "^3.3.4",
     "react-navigation": "^1.0.3"
   },
   "devDependencies": {
