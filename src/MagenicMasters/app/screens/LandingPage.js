@@ -5,7 +5,8 @@ import {
     View,
     TouchableOpacity,
     Alert,
-    SectionList
+    SectionList,
+    Button
 } from "react-native";
 
 import LaunchService from "../services/LaunchService";
@@ -39,8 +40,14 @@ export default class LandingPage extends Component {
     }
 
     async loadData() {
-        console.log("before fetch");
         var launchData = await LaunchService.getLaunchesAsync();
+        this.setState({
+            launchList: launchData
+        });
+    }
+
+    async loadCacheData() {
+        var launchData = await LaunchService.getCachedLaunchesAsync();
         this.setState({
             launchList: launchData
         });
@@ -54,6 +61,14 @@ export default class LandingPage extends Component {
         const navigation = this.props.screenProps;
         return (
             <View style={styles.mainView}>
+                <Button title="Load from Cache" onPress={async () => {
+                    await this.loadCacheData();
+                }}></Button>
+                <Button title="Clear list" onPress={async () => {
+                    this.setState({
+                        launchList: JSON.parse('[]')
+                    });
+                }}></Button>
                 <SectionList
                     style={styles.listView}
                     sections={this.state.launchList}
