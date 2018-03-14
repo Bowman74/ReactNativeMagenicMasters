@@ -14,14 +14,13 @@ export default class LaunchService {
                 .select("{agency:$.first().lsp,data:$.toArray()}")
                 .toArray();
 
-            await LaunchService.saveToDB(returnValue);
-            //await AsyncStorage.setItem(
-            //    "launchData",
-            //    JSON.stringify(returnValue)
-            //);
+            await AsyncStorage.setItem(
+                "launchData",
+                JSON.stringify(returnValue)
+            );
             return returnValue;
         } catch (error) {
-            console.error(error);
+            return await getCachedLaunchesAsync();
         }
         return returnValue;
     }
