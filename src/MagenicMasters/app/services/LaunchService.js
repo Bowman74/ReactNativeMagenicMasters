@@ -42,75 +42,87 @@ export default class LaunchService {
     }
 
     static getDatabaseConnection() {
-        var db = SQLite.openDatabase(
-            "launch.db",
-            "1.0",
-            "launch",
-            200000,
-            result => {},
-            error => {
-                console.error(error);
-            }
-        );
-        db.transaction(tx => {
-            tx.executeSql(
+        return new Promise((resolve, reject) => {
+            var db = SQLite.openDatabase(
+                "launch.db",
+                "1.0",
+                "launch",
+                200000,
+                result => {},
+                error => {
+                    reject(error);
+                }
+            );
+            db.executeSql(
                 "create table if not exists Agency (id INT, Name CHAR(50), abbrev CHAR(50), countryCode CHAR(10), type INT, infoURL CHAR(100), wikiURL CHAR(100))",
                 [],
-                (tx, results) => {}
+                (results) => {
+                    db.executeSql(
+                        "create table if not exists Launch (id INT, Name CHAR(50), windowstart CHAR(20), windowend CHAR(20), net CHAR(20))",
+                        [],
+                        (results) => {
+                            resolve(db);
+                        }
+                    );
+                }
             );
-            tx.executeSql(
-                "create table if not exists Launch (id INT, Name CHAR(50), windowstart CHAR(20), windowend CHAR(20), net CHAR(20))",
-                [],
-                (tx, results) => {}
-            );
+
         });
-        return db;
+
     }
 
-    static saveToDB(launches) {
-        let db = LaunchService.getDatabaseConnection();
-        db.transaction(tx => {
-            tx.executeSql("delete from Agency", [], (tx, results) => {});
-            tx.executeSql("delete from Launch", [], (tx, results) => {});
-            launches.forEach(function(agency) {
-                tx.executeSql(
-                    "insert into Agency (id, Name, abbrev, countryCode, type, infoURL, wikiURL) VALUES (" +
-                        agency.id +
-                        ', "' +
-                        agency.Name +
-                        '", "' +
-                        agency.abbrev +
-                        '", "' +
-                        agency.countryCode +
-                        '", "' +
-                        agency.type +
-                        '", "' +
-                        agency.infoURL +
-                        '", "' +
-                        agency.wikiURL +
-                        '")',
-                    [],
-                    (tx, results) => {}
-                );
-                agency.data.forEach(function(launch) {
-                    console.log(JSON.stringify(launch));
-                    console.log(launch.id);
-                    console.log(launch.name);
-                    tx.executeSql(
-                        "insert into Launch (id, Name, windowstart, windowend, net) VALUES (" +
-                            launch.id +
+    static async saveToDB(launches) {
+        let db = await LaunchService.getDatabaseConnection();
+        db.executeSql("select count(*) as c from Launch", [], (results) => {
+            console.log("count");
+            console.log(results.rows.raw());
+        });
+        db.executeSql("select count(*) as c from Agency", [], (results) => {
+            console.log("count");
+            console.log(results.rows.raw());
+        });
+        db.executeSql("delete from Agency", [], (results) => {
+            db.executeSql("delete from Launch", [], (results) => {
+                launches.forEach(launchInfo => {
+                    let agency = launchInfo.agency;
+                    db.executeSql(
+                        "insert into Agency (id, Name, abbrev, countryCode, type, infoURL, wikiURL) VALUES (" +
+                            agency.id +
                             ', "' +
-                            launch.Name +
+                            agency.Name +
                             '", "' +
-                            launch.windowstart +
+                            agency.abbrev +
                             '", "' +
-                            launch.windowend +
+                            agency.countryCode +
                             '", "' +
-                            launch.net +
+                            agency.type +
+                            '", "' +
+                            agency.infoURL +
+                            '", "' +
+                            agency.wikiURL +
                             '")',
                         [],
-                        (tx, results) => {}
+                        (results) => {
+                            launchInfo.data.forEach(launch => {
+                                db.executeSql(
+                                    "insert into Launch (id, Name, windowstart, windowend, net) VALUES (" +
+                                        launch.id +
+                                        ', "' +
+                                        launch.Name +
+                                        '", "' +
+                                        launch.windowstart +
+                                        '", "' +
+                                        launch.windowend +
+                                        '", "' +
+                                        launch.net +
+                                        '")',
+                                    [],
+                                    (results) => {}
+                                );
+                            });
+                        }
                     );
+    
                 });
             });
         });
