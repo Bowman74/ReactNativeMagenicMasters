@@ -8,17 +8,21 @@ export default class LaunchService {
         let returnValue = JSON.parse("[]");
         try {
             let response = await fetch("https://launchlibrary.net/1.3/launch/");
-            let responseJson = await response.json();
-            returnValue = Enumerable.from(responseJson.launches)
-                .groupBy("$.lsp.id", "$")
-                .select("{agency:$.first().lsp,data:$.toArray()}")
-                .toArray();
+            if (response.status === 200) {
+                let responseJson = await response.json();
+                returnValue = Enumerable.from(responseJson.launches)
+                    .groupBy("$.lsp.id", "$")
+                    .select("{agency:$.first().lsp,data:$.toArray()}")
+                    .toArray();
 
-            await AsyncStorage.setItem(
-                "launchData",
-                JSON.stringify(returnValue)
-            );
-            return returnValue;
+                await AsyncStorage.setItem(
+                    "launchData",
+                    JSON.stringify(returnValue)
+                );
+                return returnValue;
+        } else {
+            return await getCachedLaunchesAsync();
+        }
         } catch (error) {
             return await getCachedLaunchesAsync();
         }
