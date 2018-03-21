@@ -3,6 +3,9 @@ package com.magenic.magenicmasters;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
+import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
+import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
 import com.imagepicker.ImagePickerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -29,6 +32,9 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
             new SQLitePluginPackage(),
             new MainReactPackage(),
+            new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
+            new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
+            new AppCenterReactNativePackage(MainApplication.this),
             new ImagePickerPackage(),
             new ReactNativePushNotificationPackage(),
             new RNCameraPackage()

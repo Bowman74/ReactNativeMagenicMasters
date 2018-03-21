@@ -1,4 +1,11 @@
 PODS:
+  - AppCenter/Analytics (1.5.0):
+    - AppCenter/Core
+  - AppCenter/Core (1.5.0)
+  - AppCenter/Crashes (1.5.0):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (1.4.0):
+    - AppCenter/Core (= 1.5.0)
   - React (0.53.0):
     - React/Core (= 0.53.0)
   - react-native-camera (1.0.2):
@@ -8,6 +15,8 @@ PODS:
   - react-native-camera/RCT (1.0.2):
     - React
   - react-native-camera/RN (1.0.2):
+    - React
+  - react-native-image-picker (0.14.3):
     - React
   - react-native-sqlite-storage (3.3.4):
     - React
@@ -26,7 +35,11 @@ PODS:
   - yoga (0.53.0.React)
 
 DEPENDENCIES:
+  - AppCenter/Analytics (~> 1.5.0)
+  - AppCenter/Crashes (~> 1.5.0)
+  - AppCenterReactNativeShared (~> 1.4.0)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
   - React/DevSupport (from `../node_modules/react-native`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -36,17 +49,22 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native
   react-native-camera:
     :path: ../node_modules/react-native-camera
+  react-native-image-picker:
+    :path: ../node_modules/react-native-image-picker
   react-native-sqlite-storage:
     :path: ../node_modules/react-native-sqlite-storage
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
+  AppCenter: 42c293f0de27e173aacd600a55a49da5317cd40e
+  AppCenterReactNativeShared: 056324303732841fff14f2a71c4a6839831b038b
   React: 988a7dbd5626e0dd4f4b63fb444fa7e3d975e5b7
   react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
+  react-native-image-picker: 42cfe2c8435d893414f8714a81e480313cb1412b
   react-native-sqlite-storage: 848fb96c0b6d17b3f70e169ac41f84434cdad94c
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 94dc1fc01ec112de58e1d1f8edbb35be876e6479
+PODFILE CHECKSUM: 3d234330054edbc8061f0a2b91d88956da991adc
 
 COCOAPODS: 1.4.0

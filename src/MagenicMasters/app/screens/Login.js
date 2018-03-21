@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 
 import { NavigationActions } from "react-navigation";
 
+import Crashes from 'appcenter-crashes';
+
 export default class Login extends Component {
     static navigationOptions = {
         header: null
@@ -17,6 +19,7 @@ export default class Login extends Component {
     }
 
     login = () => {
+        Crashes.generateTestCrash();
         if (this.state.userName == "" || this.state.password == "") {
             Alert.alert(
                 "Validation error",
