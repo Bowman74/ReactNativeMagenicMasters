@@ -10,7 +10,7 @@ import Login from "./app/screens/Login";
 import TabNavigation from "./app/screens/TabNavigator";
 import Tos from "./app/screens/Tos";
 import ItemDetails from "./app/screens/ItemDetails";
-import TakePicture from "./app/screens/TakePicture";
+import ImageSelector from "./app/screens/ImageSelector";
 
 import { StackNavigator } from "react-navigation";
 
@@ -18,7 +18,7 @@ const NavigationRoutes = {
     Login: { screen: Login },
     TabNavigator: { screen: TabNavigation },
     ItemDetails: { screen: ItemDetails },
-    TakePicture: { screen: TakePicture }
+    ImageSelector: { screen: ImageSelector }
 };
 
 export const RootStack = StackNavigator(NavigationRoutes);

@@ -1,45 +1,36 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
+import {
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Text,
+    Alert,
+    Platform
+} from "react-native";
 import { RNCamera } from "react-native-camera";
 
 import PushNotification from "react-native-push-notification";
 
 export default class TakePicture extends Component {
-    static navigationOptions = ({ navigation, screenProps }) => ({
-        title: "Settings",
-        headerTintColor: "#FFFFFF",
-        headerStyle: styles.headerStyle,
-        headerRight: (
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate("Tos");
-                }}
-            >
-                <Text style={styles.headerButtonStyle}>Terms</Text>
-            </TouchableOpacity>
-        )
-    });
-
     constructor(props) {
         super(props);
 
         PushNotification.configure({
             onNotification: function(notification) {
-                Alert.alert("Notification", "Notification Pressd.");   
+                Alert.alert("Notification", "Notification Pressd.");
             }
         });
     }
 
     snapPicture = async function() {
-        const { params } = this.props.navigation.state;
         if (this.camera) {
             const options = { quality: 0.5, base64: true };
             const data = await this.camera.takePictureAsync(options);
-            params.updateUri(data.uri)
+            this.props.updateUri(data.uri);
             PushNotification.localNotification({
                 title: "Picture",
                 message: "Picture Taken",
-                number: 9999
+                number: ((Platform.OS === "ios") ? 9999 : "9999")
             });
             this.props.navigation.goBack(null);
         }

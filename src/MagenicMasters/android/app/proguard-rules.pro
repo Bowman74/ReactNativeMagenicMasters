@@ -68,3 +68,10 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+# SoLoader
+
+-keep class com.facebook.soloader.** { *; }
+-keepclassmembers class com.facebook.soloader.SoLoader {
+     static <fields>;
+}

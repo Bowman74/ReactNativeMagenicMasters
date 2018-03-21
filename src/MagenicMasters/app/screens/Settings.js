@@ -83,9 +83,9 @@ export default class Settings extends Component {
                 <View style={styles.rowStyle}>
                     <Text style={{ flex: 1 }}>Take Picture:</Text>
                     <Button
-                        title="Take Picture"
+                        title="Select Picture"
                         onPress={() => {
-                            navigation.navigate("TakePicture", { updateUri: this.updateImageUri.bind(this) });
+                            navigation.navigate("ImageSelector", { updateUri: this.updateImageUri.bind(this) });
                         }}
                     />
                 </View>
