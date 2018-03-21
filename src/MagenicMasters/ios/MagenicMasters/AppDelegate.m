@@ -11,6 +11,8 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <React/RCTPushNotificationManager.h>
+#import <UserNotifications/UserNotifications.h>
 
 @implementation AppDelegate
 
@@ -31,7 +33,31 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  UNUserNotificationCenter *notificaitonCenter = [UNUserNotificationCenter currentNotificationCenter];
+  notificaitonCenter.delegate = self;
+  
   return YES;
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+  completionHandler(UNNotificationPresentationOptionAlert);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler {
+  UILocalNotification *newNotification = [[UILocalNotification alloc] init];
+  
+  newNotification.alertTitle = response.notification.request.content.title;
+  newNotification.alertBody = response.notification.request.content.body;
+  newNotification.alertLaunchImage = response.notification.request.content.launchImageName;
+  newNotification.fireDate = response.notification.date;
+  newNotification.applicationIconBadgeNumber =  [response.notification.request.content.badge integerValue];
+  [RCTPushNotificationManager didReceiveLocalNotification:newNotification];
+  completionHandler();
 }
 
 @end

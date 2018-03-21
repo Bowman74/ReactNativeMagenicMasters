@@ -29,5 +29,19 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        configurations.all {
+            resolutionStrategy {
+                // check for updates every build
+                force 'com.android.support:appcompat-v7:26.1.0'
+                force 'com.google.android.gms:play-services-gcm:11.0.4'
+            }
+        }
+        afterEvaluate {project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion 26
+                }
+            }
+        }
     }
 }
