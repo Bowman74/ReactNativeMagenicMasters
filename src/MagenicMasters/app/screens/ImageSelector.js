@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Alert, Platform, Dimensions } from "react-native";
 import { RNCamera } from "react-native-camera";
 
 import PushNotification from "react-native-push-notification";
@@ -31,7 +31,7 @@ export default class ImageSelector extends Component {
         const { params } = this.props.navigation.state;
         const { navigation } = this.props;
         return (
-            <Swiper style={{flex: 1}} showsButtons={true}>
+            <Swiper style={styles.pickerWindow} showsButtons={true}>
             <View style={{flex: 1}}>
               <TakePicture style={{flex: 1}} updateUri={params.updateUri.bind(this)} navigation={navigation} />
             </View>
@@ -42,6 +42,9 @@ export default class ImageSelector extends Component {
         );
     }
 }
+
+var deviceWidth = Dimensions.get("window").width;
+var deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
     mainView: {
@@ -64,5 +67,9 @@ const styles = StyleSheet.create({
     },
     headerStyle: {
         backgroundColor: "#2196F3"
-    }
+    },
+    pickerWindow: {
+        width: Platform.OS === "android" ? deviceWidth : "auto",
+        height: Platform.OS === "android" ? 603 : "auto"
+    },
 });
