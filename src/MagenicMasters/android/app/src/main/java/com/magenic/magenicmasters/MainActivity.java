@@ -1,7 +1,6 @@
 package com.magenic.magenicmasters;
 
 import com.facebook.react.ReactActivity;
-import org.pgsqlite.SQLitePluginPackage;
 
 public class MainActivity extends ReactActivity {
 

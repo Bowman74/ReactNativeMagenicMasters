@@ -42,6 +42,8 @@
 	<string></string>
 	<key>NSCameraUsageDescription</key>
 	<string>To take pictures for our RN Test</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow selection of photo</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

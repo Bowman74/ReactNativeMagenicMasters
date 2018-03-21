@@ -6,4 +6,6 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => [
 'DevSupport',]
 pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
 pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
 end

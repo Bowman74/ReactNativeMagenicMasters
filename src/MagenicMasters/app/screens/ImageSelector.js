@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Alert, Button, Platform, Dimensions } from "react-native";
 import { RNCamera } from "react-native-camera";
 
 import PushNotification from "react-native-push-notification";
 import Swiper from 'react-native-swiper';
+var ImagePicker = require('react-native-image-picker');
 
 import TakePicture from './TakePicture';
 
@@ -27,21 +28,52 @@ export default class ImageSelector extends Component {
         super(props);
     }
 
+    showImagePicker = () => {
+        const { params } = this.props.navigation.state;
+        var options = {
+            title: 'Select Image',
+            storageOptions: {
+              skipBackup: true,
+              path: 'images'
+            }
+        };
+          
+        ImagePicker.showImagePicker(options, (response) => {
+            
+            if (response.didCancel) {
+                Alert.alert('Cancelled', 'User cancelled image picker');
+            }
+            else if (response.error) {
+                Alert.alert('Error', 'ImagePicker Error: ' + response.error.toString());
+            }
+            else {            
+                params.updateUri(response.uri);
+                this.props.navigation.goBack(null);
+            }
+        });
+    }
+
     render() {
         const { params } = this.props.navigation.state;
         const { navigation } = this.props;
         return (
-            <Swiper style={{flex: 1}} showsButtons={true}>
+            <Swiper style={styles.pickerWindow} showsButtons={true}>
             <View style={{flex: 1}}>
               <TakePicture style={{flex: 1}} updateUri={params.updateUri.bind(this)} navigation={navigation} />
             </View>
             <View style={{flex: 1}}>
-              <Text style={{flex: 1}}>Some other way to get a picture.</Text>
+              <Button style={{width: 100, height: 100}} title="SelectImage"
+                    onPress={() => {
+                        this.showImagePicker();
+                    }}/>
             </View>
           </Swiper>
         );
     }
 }
+
+var deviceWidth = Dimensions.get("window").width;
+var deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
     mainView: {
@@ -64,5 +96,9 @@ const styles = StyleSheet.create({
     },
     headerStyle: {
         backgroundColor: "#2196F3"
-    }
+    },
+    pickerWindow: {
+        width: Platform.OS === "android" ? deviceWidth : "auto",
+        height: Platform.OS === "android" ? 603 : "auto"
+    },
 });
