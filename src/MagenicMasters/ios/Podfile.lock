@@ -1,20 +1,41 @@
 PODS:
   - React (0.53.0):
     - React/Core (= 0.53.0)
+  - react-native-camera (1.0.2):
+    - React
+    - react-native-camera/RCT (= 1.0.2)
+    - react-native-camera/RN (= 1.0.2)
+  - react-native-camera/RCT (1.0.2):
+    - React
+  - react-native-camera/RN (1.0.2):
+    - React
   - react-native-sqlite-storage (3.3.4):
     - React
   - React/Core (0.53.0):
     - yoga (= 0.53.0.React)
+  - React/DevSupport (0.53.0):
+    - React/Core
+    - React/RCTWebSocket
+  - React/fishhook (0.53.0)
+  - React/RCTBlob (0.53.0):
+    - React/Core
+  - React/RCTWebSocket (0.53.0):
+    - React/Core
+    - React/fishhook
+    - React/RCTBlob
   - yoga (0.53.0.React)
 
 DEPENDENCIES:
-  - React (from `../node_modules/react-native`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
+  - React/DevSupport (from `../node_modules/react-native`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
+  react-native-camera:
+    :path: ../node_modules/react-native-camera
   react-native-sqlite-storage:
     :path: ../node_modules/react-native-sqlite-storage
   yoga:
@@ -22,9 +43,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   React: 988a7dbd5626e0dd4f4b63fb444fa7e3d975e5b7
+  react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
   react-native-sqlite-storage: 848fb96c0b6d17b3f70e169ac41f84434cdad94c
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 6d2a555152cfadb6b9b2f87afcd5444844421121
+PODFILE CHECKSUM: 94dc1fc01ec112de58e1d1f8edbb35be876e6479
 
 COCOAPODS: 1.4.0

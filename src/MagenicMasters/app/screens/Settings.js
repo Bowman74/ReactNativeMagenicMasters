@@ -10,7 +10,10 @@ import {
     DatePickerIOS,
     TouchableNativeFeedback,
     DatePickerAndroid,
-    Platform
+    Platform,
+    ScrollView,
+    Button,
+    Image
 } from "react-native";
 
 import DateControl from "./DateControl";
@@ -35,7 +38,8 @@ export default class Settings extends Component {
         super(props);
         this.state = {
             settings: { createDate: new Date(), workOffline: false },
-            dateErrorColor: "#FF0000"
+            dateErrorColor: "#FF0000",
+            imageUri: ""
         };
     }
 
@@ -45,9 +49,17 @@ export default class Settings extends Component {
         });
     }
 
+    updateImageUri(newImageUri) {
+        this.setState({
+            imageUri: newImageUri
+        });        
+    }
+
     render() {
+        const navigation = this.props.screenProps;
+        const updateImage = this.updateImageUri;
         return (
-            <View style={styles.mainView}>
+            <ScrollView style={styles.mainView}>
                 <View style={styles.rowStyle}>
                     <Text>User Name:</Text>
                     <Text style={{ flex: 1, textAlign: "right" }}>
@@ -67,6 +79,21 @@ export default class Settings extends Component {
                     <Text style={{ flex: 1, textAlign: "right" }}>
                         {this.state.settings.createDate.toDateString()}
                     </Text>
+                </View>
+                <View style={styles.rowStyle}>
+                    <Text style={{ flex: 1 }}>Take Picture:</Text>
+                    <Button
+                        title="Take Picture"
+                        onPress={() => {
+                            navigation.navigate("TakePicture", { updateUri: this.updateImageUri.bind(this) });
+                        }}
+                    />
+                </View>
+                <View style={styles.rowStyle}>
+                    <Image 
+                        style={{height: 150, width: 150}}
+                        source={{uri: this.state.imageUri}}
+                    />
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={{ flex: 1 }}>Work Offline:</Text>
@@ -90,7 +117,7 @@ export default class Settings extends Component {
                         </Text>
                     </View>
                 )}
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -115,5 +142,11 @@ const styles = StyleSheet.create({
     headerButtonStyle: {
         color: "#FFFFFF",
         padding: 20
+    },
+    preview: {
+        flex: 1,
+        height: 500,
+        justifyContent: "flex-end",
+        alignItems: "center"
     }
 });
